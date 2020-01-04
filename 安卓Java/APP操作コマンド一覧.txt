@@ -1,0 +1,423 @@
+
+機器のシリアル番号
+adb get-serialno
+
+パソコンと接続している機器を確認
+adb devices
+
+機器を再起動
+adb reboot
+
+Android設定メニュー
+adb shell am start -n com.android.settings/.Settings
+
+SIMネットワーク設定手順：
+みんなにSIM渡しました。
+設定アプリで以下のAPN設定してください。
+APN：iijmobile.biz
+ユーザー：mobile@iij
+パスワード：iij
+認証タイプ：PAPまたはCHAP
+
+＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+
+ADBによってWIFIのON/OFFをコントロール
+adb shell svc wifi enable
+
+adb shell svc wifi disable
+*********************************************************************************************************************
+
+Android設定メニュー
+adb shell am start -n com.android.settings/.Settings
+
+
+端末にIMEIを書き込み（曲さんの分）
+adb shell settings put global DEVICE_IMEI 201807041234207
+
+童
+adb shell settings put global DEVICE_IMEI 201909171234204
+
+端末のIMEIを取得
+adb shell settings get global DEVICE_IMEI 
+
+********************************************************************************************************************
+
+ログ確認
+adb logcat
+
+ログからアウト
+Ctrl + C (ショットキー）
+
+プロセス確認
+adb shell ps
+
+メモリ利用状況 
+adb shell cat /proc/meminfo
+
+＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+ apk を差し替えるときは↓のコマンドを事前にたたくこと
+ adb root
+ adb disable-verity
+ adb reboot
+ adb を差し替えるときはadb install は使わないこと
+ adb root
+ adb remount
+ // strix: adb push C:\Users\doeimei\Desktop\testAPK\VersionUp-release-KeystoreSigned.apk /system/priv-app/VersionUp.apk 
+ adb push C:\Users\doeimei\Desktop\testAPK\apk_0823_version\VersionUp-release-KeystoreSigned.apk /system/product/priv-app/JKCVersionUp
+ 
+ adb push C:\Users\doeimei\Desktop\testAPK\apk_0911_version\EventDetection-release-KeystoreSigned.apk /system/product/priv-app/JKCEventDetection/JKCEventDetection.apk
+ 
+ 
+/system/product/priv-app/JKCComm/JKCComm.apk
+
+/system/product/priv-app/JKCEventDetect/JKCEventDetect.apk
+
+/system/product/priv-app/JKCEventSending/JKCEventSending.apk
+
+
+＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+削除apk
+
+adb remount
+adb shell
+chmod 777 system
+adb rm  -r XXX.apk
+
+
+
+＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+
+署名ファイルをapkにPushする方法
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar Communication-envst-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA Communication-envst-release-unsigned.apk android
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar Communication-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA Communication-release-unsigned.apk android
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar EventDetection-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA EventDetection-release-unsigned.apk android
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar EventSending-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA EventSending-release-unsigned.apk android
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar VersionUp-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA VersionUp-release-unsigned.apk android
+
+上記のコマンドで解決しました。コマンドの末尾にandroidと付ける必要があります。CDR9010.jks証書が生成された時の別名はandroidなので、androidを別名として入力します。なので、パスワードはそのままandroidで問題ないです。
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar Communication-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA Communication-release-unsigned.apk android
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar EventDetection-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA EventDetection-release-unsigned.apk android
+
+jarsigner -verbose -keystore CDR9010.jks -signedjar EventSending-release-KeystoreSigned.apk -digestalg SHA1  -sigalg MD5withRSA EventSending-release-unsigned.apk android
+
+＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊＊
+
+
+注意：\\warhol\prj\999_BackUp\AndyBuild_condor\#6\Debug_Keystore_Signed
+communication_APK四つあるが、VoIP機能テストしないため、基本envstバージョン使います。
+VoIP機能テストするときenvjvcstバージョン使う
+
+ログをロカールに出力、保存
+adb pull vendor/jkc/log c:/Tongyiming(全て）
+
+adb pull vendor/jkc/log/com.jvckenwood.eventdetection c:/Tongyiming（イベント検知）
+
+AndroidStudio指定プロセスやAPKのログを確認する手順
+メイン画面の右下にあるEvent Logをクリック → 端末表示の右（APKやプロセス欄）にあるAPKを選択 → ログで確認
+
+apk一覧獲得
+adb shell pm list packages
+
+versionup.apkを開始させる
+adb shell am broadcast -a com.jvckenwood.versionup.UPDATE_START
+
+イベント送信を開始させる(手動ではない、自動で）
+adb shell am broadcast -a android.intent.action.BOOT_COMPLETED
+
+起動後初回の初期化
+adb shell am broadcast -a android.intent.action.STARTUP_NOTIFY
+
+adb shell am broadcast -a android.intent.action.STARTUP_NOTIFY --ei startUp 1 --ei rtcInfo 1 
+
+電源OFFにする
+adb shell am broadcast -a android.intent.action.DVR_SHUTDOWN
+
+adb shell am broadcast -a android.intent.action.ACC_OFF
+
+ADASからイベント通知
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei eventType 4 --ei timeStamp 1000
+
+MainAppに画面表示要求（イベント送信）
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_DISPLAY_ALERT
+
+イベント検知からイベント通知
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 4 --el timeStamp 1000
+
+->中衝撃 
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 2 --el timeStamp 1569298678791 --ei autoWarning 1 --ei savemode 0
+
+イベント通知録画要求
+adb shell settings put global EVENT_abrupt_handle 1
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS  --ei eventType 2 --ei timeStamp 1000
+
+イベント通知録画受信
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_RECORD_RESPONSE
+
+録画判定設定Key(ADAS)
+adb shell settings put global EVENT_FCWS 1
+or
+adb shell settings put global EVENT_FCWS 0
+
+
+Adas左車線逸脱警告
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei eventType 6 --el timeStamp 1550480305000
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei eventType 1 --el timeStamp 1000
+
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei eventType 4 --el timeStamp 1550480305000
+
+
+大衝撃
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei savemode 0 --ei autoWarning 0 --el timeStamp 1571107995815 --ei eventType 0 
+
+
+録画判定設定Key(イベント検知)
+adb shell settings put global EVENT_accident 1
+or
+adb shell settings put global EVENT_accident 0
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 2 --ei timeStamp 1000
+
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 2 --ei timeStamp 1000
+(eventType後ろにある番号はKeyによって違う、詳細はソースのEventType.javaを参照）
+
+通知判定設定key（ユーザー毎に異なる）
+adb shell settings put global NOTIFY_driving_time_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 1 --el timeStamp 1550480305000
+
+長時間走行通知
+adb shell settings put global NOTIFY_driving_time_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 1 --el timeStamp 1550480305000
+
+逆走通知
+adb shell settings put global NOTIFY_reverse_run_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 11 --el timeStamp 1550480305000
+
+前方衝突通知
+adb shell settings put global ADAS_FCWS_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 4 --el timeStamp 1550480305000
+
+一時停止通知
+adb shell settings put global NOTIFY_stop_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 15 --el timeStamp 1550480305000
+
+動物注意（鹿）
+adb shell settings put global NOTIFY_road_kill_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 16 --el timeStamp 1550480305000
+
+歩行者注意
+adb shell settings put global ADAS_pedestrian_collision_user2 1
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_EVENT_DETECT --ei eventType 28 --el timeStamp 1550480305000
+
+メニュー遷移通知送信（イベント検知）
+adb shell am broadcast -a android.intent.action.MENU_TRANSITION
+
+2H長時間走行
+adb shell settings put global NOTIFY_driving_time_user2 1
+adb wait-for-device shell "am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei 'eventType' 1 --el 'timeStamp' 1550480305000"
+
+
+
+イベント検知・電源OFF受信
+adb shell am broadcast -a android.intent.action.ACC_OFF
+
+
+
+adb shell am broadcast -a com.jvckenwood.communication.VOIP_REQUEST --ei impactType （・impactType:　5G未満：0 / 5G以上：1 / 緊急ボタン：-1)
+
+adb shell am broadcast -a com.jvckenwood.communication.VOIP_HEALTH_CHECK --ei status （・status: 0:呼び出し中 / 1:通話中)
+
+VoIP接続開始通知受信
+adb shell am broadcast -a com.jvckenwood.communication.VOIP_INFORMATION_REQUEST --ei requestID 20666 --ei userId 1 --ei isUserCall 1   (1.User Button Press / 2.Realtime.)
+
+
+
+
+事故発生画面表示指示(VoIPサーバとの接続)
+adb shell am broadcast -a com.jvckenwood.communication.VOIP_CALL
+
+VoIP通話終了通知受信(接続NG)
+adb shell am broadcast -a com.jvckenwood.communication.DISC_EMERGENCY_CALL --ei status 3  キャンセル(接続NG)
+
+adb shell am broadcast -a com.jvckenwood.communication.DISC_EMERGENCY_CALL --ei status 2  接続取り消し
+
+adb shell am broadcast -a com.jvckenwood.communication.DISC_EMERGENCY_CALL --ei status 1  正常通話完了
+
+音声キャンセル応答
+adb shell am broadcast -a com.jvckenwood.tts.VOICE_CANCEL_RESPONSE
+
+TTS自由鳴動
+adb shell am broadcast -a com.jvckenwood.tts.VOICE_NOTIFICATION --eia voiceId 0x0101 --ei requestId 0x0101
+adb shell am broadcast -a com.jvckenwood.tts.VOICE_NOTIFICATION --eia voiceId 0x0102 --ei requestId 0x0102
+
+発話中発話キャンセル受信
+adb shell am broadcast -a com.jvckenwood.tts.SPEECH_STOP
+
+発話中音声通知受信
+adb shell am broadcast -a com.jvckenwood.tts.VOICE_NOTIFICATION
+
+発話完了通知受信
+adb shell am broadcast -a com.jvckenwood.tts.VOICE_END_RESPONSE
+
+音声ファイル
+/system/vendor/jkc/VoiceGuidanceFile/ja
+
+TTSログパス
+/system/vendor/jkc/log/com.jvckenwood.tts
+
+
+
+
+office365のライセンス有効期限チェック
+certmgr.msc(windowsを検索→証明書→個人→証明書)
+
+
+Adasデバッグモード
+adb shell am broadcast -a com.jvckenwood.adas.DEBUGMODE_INIT --ei PitchAngle 256 --ei YawhAngle 256 --ei HorizonY 360 --ei BonnetY 534 --ei CenterX 640 --ei InstallationHeight 120 --ei CenterDiff 1 --ei VehicleWidth 170 --ei VehiclePointDistance 180 --ei SelectIP 81920 --ei CarCollisionSpeed 0 --ei CarCollisionTime 2700 --ei LaneDepartureSpeed 60 --ei LaneDepartureRange 0 --ei LaneDepartureTime 2000 --ei DepartureDelay 150 --ei DepartureRange 1000 --ei PedCollisionSpeed 2000 --ei PedCollisionWidth 0 --ei PedCollisionLowSpeed 5 --ei PedCollisionHighSpeed 30  
+
+
+AdasデバッグモードOFF、通常値で初期化
+adb shell am broadcast -a com.jvckenwood.adas.DEBUGMODE_FINISH
+
+
+ADASライブラリの初期化
+adb shell am broadcast -a com.jvckenwood.adas.util.FC_PARAMETER --ei PitchAngle 256 --ei YawhAngle 256 --ei HorizonY 360 --ei BonnetY 534 --ei CenterX 640 --ei InstallationHeight 120 --ei CenterDiff 1 --ei VehicleWidth 170 --ei VehiclePointDistance 180 --ei SelectIP 81920 --ei CarCollisionSpeed 10 --ei CarCollisionTime 2700 --ei LaneDepartureSpeed 60 --ei LaneDepartureRange 10 --ei LaneDepartureTime 2000 --ei DepartureDelay 150 --ei DepartureRange 1000 --ei PedCollisionSpeed 2000 --ei PedCollisionWidth 10 --ei PedCollisionLowSpeed 5 --ei PedCollisionHighSpeed 30
+
+
+
+
+ADAS検知に使用
+adb shell am broadcast -a com.jvckenwood.adas.detection.FC_INPUT --ei VehicleSpeed 100 --el CaptureTime 20190731164515 --el CaptureMilliSec 1550480305000000
+
+
+adb shell am broadcast -a com.jvckenwood.adas.INTENT_ACTION_EVENT_NOTIFY_ADAS --ei eventType 4 --el timeStamp 1550480305000
+
+自動キャリブレーションの結果を格納する
+adb shell am broadcast -a com.jvckenwood.adas.detection.FC_CALIBRATION
+
+Adasサーバー通信
+adb shell am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei eventType 1 --el timeStamp 1550480305000
+
+
+
+
+
+
+adb shell settings put global DEVICE_IMEI 201807041234207
+
+adb shell am start -n com.android.settings/.Setting
+
+2H長時間走行
+adb shell settings put global NOTIFY_driving_time_user2 1
+adb wait-for-device shell "am broadcast -a com.jvckenwood.eventsending.EVENT_NOTIFY_ADAS --ei 'eventType' 1 --el 'timeStamp' 1565056112000"
+
+長時間走行リセット
+adb shell am broadcast -a com.jvckenwood.communication.TRIPID_UPDATE_NOTIFICATION
+
+
+
+ユーザID変更
+adb shell am broadcast -a com.jvckenwood.communication.CHANGE_USERID --ei uerID 3
+
+
+
+ユーザー切替、設定値変更
+手順：
+①STARTUP_NOTIFY を下記パラメータで受信
+　startUp X 　 rtcInfo Y　　X：3以外　Y：任意
+始期日前起動  adb shell am broadcast -a android.intent.action.STARTUP_NOTIFY --ei startUp 1 --ei rtcInfo 1
+通常起動（契約期間内） adb shell am broadcast -a android.intent.action.STARTUP_NOTIFY --ei startUp 2 --ei rtcInfo 1
+②Menuボタン押下－システム基本設定－車両タイプ－その他　を設定
+
+
+
+C:\Tongyiming\jkc_cert\new_\CDR9010.jks
+
+
+
+イベント検知→長時間走行→イベント通知	
+
+
+起動シーケンスのVersionアップ処理が完了したことを通知する
+MainAPPはこのBroadcastを受け取って「警告」画面を表示する。
+※通知対象：MainAPP、通信APP
+adb shell am broadcast -a com.jvckenwood.versionup.STARTUP --ei bootinfo 0 --ei updateinfo 0
+
+bootinfo     int          0：Normal Boot-up、1：Factory Boot-up
+updateinfo   int          0：None、1：Update failed、2：Update completed 
+
+
+メディアフォーマット実行結果を通信に通知
+adb shell am broadcast -a com.jvckenwood.communication.MEDIA_FORMAT_RESULT --ei result 0 --ei cardError 0
+
+
+サーバーからメディアフォーマット通知を受ける
+adb shell am broadcast -a com.jvckenwood.communication.MEDIA_FORMAT_REQUEST --ei media 1
+
+
+
+VoIP呼び出し中状態、通話中状態をサーバーへ通知する
+adb shell am broadcast -a com.jvckenwood.communication.VOIP_HEALTH_CHECK --ei status 0
+
+
+2Camera起動方法
+adb shell am start -n com.example.android.camera2basic/.CameraActivity
+
+ユーザーID更新コマンド(試験用)
+adb shell am broadcast -a com.jvckenwood.communication.CHANGE_USERID --es userId "12345656"
+
+
+NMEAのGPGSA情報サンプルアプリ用
+adb shell am start -n com.example.mygpgsa/.MainActivity
+
+
+Zip4jデモ起動方法
+adb shell am start -n jp.co.a20190320.zipdemo/.MainActivity
+ 
+
+ 
+ 
+ 
+ 
+ //json試験 失効
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Snap
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Snap
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Manual
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Event
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Media
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Pubkey
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Cert
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Null
+ 
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Null_Command
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Null_SerComm
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_No_Para
+ 
+ adb shell am broadcast -a com.jvckenwood.communication.Gson_Split_Null_Pointer
+ 
+ 
+ 
+                
