@@ -47,7 +47,7 @@ int main(int argc, const char * argv[]) {
     while (1) {
         //先拿到文件夹中的子目录
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *path = @"/Users/tongyiming/Desktop/待删除文件夹/";
+        NSString *path = @"/Users/tong喵喵/Desktop/待删除文件夹/";
         NSArray *arr = [fileManager contentsOfDirectoryAtPath:path error:nil];
         
         if (arr.count > 0) {
